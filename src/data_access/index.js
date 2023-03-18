@@ -7,7 +7,6 @@ const uri = process.env.DM_COMMENTS_DB_URI
 const dbName = process.env.DM_COMMENTS_DB_NAME
 const client = new MongoClient(uri, { useNewUrlParser: true })
 
-console.log('MONGO CLIENT: ', MongoClient)
 const makeDb = async () => {
   try {
     dotenv.config()
