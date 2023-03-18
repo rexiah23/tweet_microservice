@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/rexiah23/tweet_microservice/issues"
   },
-  "homepage": "https://github.com/rexiah23/tweet_microservice#readme"
+  "homepage": "https://github.com/rexiah23/tweet_microservice#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mongodb": "^5.1.0"
+  },
+  "type": "module"
 }

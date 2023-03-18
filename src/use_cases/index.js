@@ -1,11 +1,9 @@
 import buildAddTweet       from "./add_tweet"
 import createModerateTweet from "./moderate_tweet";
+import tweetsDb            from "../data_access";
 
 //TODO: Create real functions for below
-const tweetDb = () => ({
-  insert: (data) => {console.log('inserted tweet!'); return data},
-  findByHash: (data) => {console.log('found tweet by hash!'); return data},
-})
+
 
 const isQuestionable = (tweet) => {
   const randomNumber = Math.random()
