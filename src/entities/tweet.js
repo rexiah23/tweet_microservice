@@ -27,7 +27,7 @@ const buildCreateTweet = ({ ID, md6, sanitizeText, isHashtagValid, createTweeter
     }
 
     if (!text || text.length < textMinLength) {
-      throw new Error(`Tweet must be more than ${textMaxLength} characters.`)
+      throw new Error(`Tweet must be more than ${textMinLength} characters.`)
     }
 
     if (text.length > textMaxLength) {
