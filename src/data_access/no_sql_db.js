@@ -23,6 +23,9 @@ const buildSqlDb = ({ makeDb }) => {
     const query = { _id: findId }
     const result = await db.collection('tweets').findOne(query)
     console.log('result: ', result)
+    if (!result) {
+      return null 
+    }
     const { _id: id, ...foundInfo } = result
     console.log('returning...', { id, ...foundInfo})
     return { id, ...foundInfo }
@@ -48,12 +51,21 @@ const buildSqlDb = ({ makeDb }) => {
     console.log('returning...', { id, ...insertedInfo })
     return { id, ...insertedInfo }
   }
+
+  const remove = async ({ id: _id }) => {
+    console.log('hit delete by id:', _id)
+    const db = await makeDb()
+    const result = await db.collection('tweets').deleteOne({ _id })
+    console.log('result: ', result)
+    return result.deletedCount > 0 
+  }
     
   return Object.freeze({
     findByHash, 
     findById,
     update,
     insert,
+    remove
   })
 }
 

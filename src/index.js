@@ -4,9 +4,9 @@ import controller          from './controllers/index.js'
 
 const routes = Router({})
 
-routes.post('/tweet', expressHttpCallback(controller['postTweet']))
-routes.put('/tweet',  expressHttpCallback(controller['updateTweet']))
-
+routes.post('/tweet',   expressHttpCallback(controller['postTweet']))
+routes.put('/tweet',    expressHttpCallback(controller['updateTweet']))
+routes.delete('/tweet', expressHttpCallback(controller['deleteTweet']))
 export default routes
 
 
