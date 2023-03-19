@@ -1,9 +1,10 @@
-import buildTestController from "./test.js";
+import buildPostTweet from "./post_tweet.js"
+import { addTweet } from "../use_cases/index.js"
 
-const testController = buildTestController()
-
+const postTweet = buildPostTweet({ addTweet })
 const controller = Object.freeze({
-  testController
+  postTweet 
 })
 
+console.log('hit controller here!')
 export default controller

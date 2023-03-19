@@ -84,7 +84,7 @@ const buildCreateTweet = ({ ID, md6, sanitizeText, isHashtagValid, createTweeter
       publish: () => {
         published = true 
       }, 
-      unpublish: () => {
+      unPublish: () => {
         published = false 
       }
     })

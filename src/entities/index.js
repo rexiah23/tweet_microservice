@@ -1,7 +1,9 @@
-import buildCreateTweet         from "./tweet";
-import buildCreateTweeterSource from "./tweeterSource";
-import ID                       from "../ID";
+import md6                      from 'md6-hash'
+import buildCreateTweet         from "./tweet.js";
+import buildCreateTweeterSource from "./tweeter_source.js";
+import ID                       from "../ID/index.js";
 
+console.log('MD6 :', md6)
 //TODO - find libraries for each 
 const isIpValid = (ipAddress) => { 
   console.log('Validating ip address...', ipAddress)
@@ -22,7 +24,7 @@ const isHashtagValid = (hashTag) => {
 }
 
 const createTweeterSource = buildCreateTweeterSource({ isIpValid })
-const createTweet = buildCreateTweet({ ID, sanitizeText, isHashtagValid, createTweeterSource})
+const createTweet = buildCreateTweet({ ID, md6, sanitizeText, isHashtagValid, createTweeterSource})
 
 console.log('Created Tweet: ', createTweet)
 

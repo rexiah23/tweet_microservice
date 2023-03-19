@@ -8,11 +8,12 @@ const createModerateTweet = ({ isSuspicious, initiateReview }) => {
       text: tweet.getText(),
       tweeter: tweet.getTweeter(), 
       createdOn: tweet.getCreatedOn(),
-      modifiedOn: tweet.getModifiedOn()
+      updatedOn: tweet.getUpdatedOn()
     })
 
     console.log('Should we moderate tweet?: ', shouldModerate)
     const moderated = { ...tweet }
+    console.log('moderated: ', moderated)
     // if tweet is suspicious, initiate review and unpublish the tweet 
     if (shouldModerate) {
       console.log('Moderating tweet...')

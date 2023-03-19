@@ -1,4 +1,4 @@
-import ID from "../Id"
+import ID from "../Id/index.js"
 
 const buildSqlDb = ({ makeDb }) => {
   const findByHash = async (hash) => {
@@ -22,7 +22,10 @@ const buildSqlDb = ({ makeDb }) => {
     const db = await makeDb()
     const query = { _id, ...commentInfo }
     const result = await db.collection('tweets').insertOne(query)
-    const { _id: id, ...insertedInfo } = result.ops[0]
+    const insertedDoc = await db.collection('tweets').findOne({ _id: result.insertedId })
+
+    console.log('result from inserting:', insertedDoc)
+    const { _id: id, ...insertedInfo } = insertedDoc
     console.log('returning...', { id, ...insertedInfo })
     return { id, ...insertedInfo }
   }

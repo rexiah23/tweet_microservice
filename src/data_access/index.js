@@ -1,31 +1,36 @@
 import dotenv from 'dotenv'
-import mongodb from 'mongodb'
-// import buildNoSqlDb from './no_sql_db'
+import { MongoClient } from 'mongodb'
+import buildNoSqlDb from './no_sql_db.js'
 
-const MongoClient = mongodb.MongoClient
-const uri = process.env.DM_COMMENTS_DB_URI
-const dbName = process.env.DM_COMMENTS_DB_NAME
-const client = new MongoClient(uri, { useNewUrlParser: true })
+dotenv.config()
+const uri = process.env.DB_URI
+const dbName = process.env.DB_NAME
+
+console.log('uri: ', uri)
+console.log('dbName: ', dbName)
+
+
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  writeConcern: { w: "majority", j: true }
+})
 
 const makeDb = async () => {
   try {
-    dotenv.config()
-    console.log('a')
-    if (!client.isConnected()) {
-      console.log('b')
-      await client.connect()
-    }
-    console.log('c')
-    return client.db(dbName)
+    // if (!client.isConnected()) {
+      const resp = await client.connect()
+      console.log('Connected to mongodb server.', resp)
+    // }
+    const finalDb = client.db(dbName)
+    console.log('finalDb: ', finalDb)
+    return finalDb
   } catch(e) {
     console.log('erroasd', e)
-  } finally {
-    await client.close()
   }
 }
 
-makeDb().catch(console.log)
+const tweetDb = buildNoSqlDb({ makeDb })
 
-// const tweetsDb = buildNoSqlDb({ makeDb })
-
-// export default tweetsDb
+console.log('tweet db:', tweetDb)
+export default tweetDb 

@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import dotenv     from 'dotenv'
 import routes     from './src/index.js'
 
+console.log('starts here')
 dotenv.config()
 const app = express()
 

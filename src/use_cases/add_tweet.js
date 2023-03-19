@@ -1,26 +1,25 @@
-import createTweet from "../entities"
+import createTweet from "../entities/index.js"
 
 const buildAddTweet = ({ tweetDb, moderate }) => {
+  console.log('tweet db from build adda tweet:', tweetDb)
   return async function addTweet(tweetInfo) {
     const tweet = createTweet(tweetInfo)
 
-    const tweetExists = tweetDb.findByHash(tweet.getHash())
-
-    console.log('Does tweet exist in database?:', tweetExists)
-
+    const tweetExists = await tweetDb.findByHash(tweet.getHash())
+    
+    console.log('tweet Exists: ', tweetExists)
     if (tweetExists) {
+      console.log('Tweet already exists in database')
       return tweet
     }
-
-    console.log('Tweet exists in database.')
-
-    const moderatedTweet = moderate({ tweet })
+    
+    const moderatedTweet = await moderate({ tweet })
 
     console.log('Tweet after moderation: ', moderatedTweet)
-    return tweetDb.insert({
+    return await tweetDb.insert({
       id: moderatedTweet.getId(),
       postId: moderatedTweet.getPostId(),
-      replyToId: moderatedTweet.replyToId(),
+      replyToId: moderatedTweet.getReplyToId(),
       text: moderatedTweet.getText(),
       tweeter: moderatedTweet.getTweeter(),
       hashTags: moderatedTweet.getHashTags(),
