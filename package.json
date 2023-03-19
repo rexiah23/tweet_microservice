@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/rexiah23/tweet_microservice#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "md6-hash": "^1.0.0",

@@ -1,11 +1,25 @@
 import express    from 'express'
+import cors       from 'cors'
 import bodyParser from 'body-parser'
 import dotenv     from 'dotenv'
 import routes     from './src/index.js'
 
-console.log('starts here')
 dotenv.config()
 const app = express()
+
+const whitelist = process.env.APP_ALLOWORIGIN
+const corsOption = {
+  origin: (origin, callback)=>{
+    if(whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(null, false)
+    }
+  },
+  credentials: true
+}
+
+app.use(cors(corsOption))
 
 // Parse body JSON data with payload size limit to mitigate variable size DOS
 app.use(bodyParser.json({limit: "500kb"}))
