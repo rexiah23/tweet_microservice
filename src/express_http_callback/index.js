@@ -14,7 +14,7 @@ const expressHttpCallback = (controller) => {
           'User-Agent': req.get('User-Agent')
         }
       }
-  
+      
       const response = await controller(httpRequest)
       
       if (response.headers) {

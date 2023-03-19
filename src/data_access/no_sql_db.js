@@ -1,6 +1,25 @@
 import ID from "../Id/index.js"
 
 const buildSqlDb = ({ makeDb }) => {
+
+  const getTweetsByTweeter = async ({ tweeter }) => {
+    console.log('hit find tweeter:', tweeter)
+    const db = await makeDb()
+    const query = { tweeter }
+    const result = await db.collection('tweets').find(query)
+    const found = await result.toArray()
+    console.log('found: ', found)
+    if (!found.length) {
+      return null 
+    }
+
+    return found.map(tweet => {
+      tweet.id = tweet._id 
+      delete tweet._id
+      return tweet 
+    })
+  }
+
   const findByHash = async (hash) => {
     console.log('hit find by hash:', hash)
     const db = await makeDb()
@@ -9,12 +28,12 @@ const buildSqlDb = ({ makeDb }) => {
     console.log('result: ', result)
     const found = await result.toArray()
     console.log('found: ', found)
-    if (found.length === 0) {
+    if (!found.length) {
       return null
     }
-    const { _id: id, ...insertedInfo } = found[0]
-    console.log('returning...', { id, ...insertedInfo})
-    return { id, ...insertedInfo }
+    const { _id: id, ...foundInfo } = found[0]
+    console.log('returning...', { id, ...foundInfo})
+    return { id, ...foundInfo }
   }
 
   const findById = async (findId) => {
@@ -61,6 +80,7 @@ const buildSqlDb = ({ makeDb }) => {
   }
     
   return Object.freeze({
+    getTweetsByTweeter,
     findByHash, 
     findById,
     update,
