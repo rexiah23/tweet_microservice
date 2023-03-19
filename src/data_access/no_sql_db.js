@@ -2,10 +2,10 @@ import ID from "../Id/index.js"
 
 const buildSqlDb = ({ makeDb }) => {
 
-  const getTweetsByTweeter = async ({ tweeter }) => {
+  const getActiveTweetsByTweeter = async ({ tweeter }) => {
     console.log('hit find tweeter:', tweeter)
     const db = await makeDb()
-    const query = { tweeter }
+    const query = { tweeter, isPublished: true, isDeleted: false }
     const result = await db.collection('tweets').find(query)
     const found = await result.toArray()
     console.log('found: ', found)
@@ -80,7 +80,7 @@ const buildSqlDb = ({ makeDb }) => {
   }
     
   return Object.freeze({
-    getTweetsByTweeter,
+    getActiveTweetsByTweeter,
     findByHash, 
     findById,
     update,
