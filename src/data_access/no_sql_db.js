@@ -16,11 +16,30 @@ const buildSqlDb = ({ makeDb }) => {
     console.log('returning...', { id, ...insertedInfo})
     return { id, ...insertedInfo }
   }
-  
-  const insert = async ({ id: _id = ID.makeId(), ...commentInfo }) => {
-    console.log('hit insert:', {_id, ...commentInfo})
+
+  const findById = async (findId) => {
+    console.log('hit find by id:', findId)
     const db = await makeDb()
-    const query = { _id, ...commentInfo }
+    const query = { _id: findId }
+    const result = await db.collection('tweets').findOne(query)
+    console.log('result: ', result)
+    const { _id: id, ...foundInfo } = result
+    console.log('returning...', { id, ...foundInfo})
+    return { id, ...foundInfo }
+  }
+
+  const update = async ({ id: _id, ...updateInfo }) => {
+    console.log('hit update by id:', _id)
+    const db = await makeDb()
+    const result = await db.collection('tweets').updateOne({ _id }, { $set: { ...updateInfo }})
+    console.log('result: ', result)
+    return result.modifiedCount > 0 ? { id: _id, ...updateInfo } : null
+  }
+  
+  const insert = async ({ id: _id = ID.makeId(), ...insertInfo }) => {
+    console.log('hit insert:', {_id, ...insertInfo})
+    const db = await makeDb()
+    const query = { _id, ...insertInfo }
     const result = await db.collection('tweets').insertOne(query)
     const insertedDoc = await db.collection('tweets').findOne({ _id: result.insertedId })
 
@@ -32,7 +51,9 @@ const buildSqlDb = ({ makeDb }) => {
     
   return Object.freeze({
     findByHash, 
-    insert 
+    findById,
+    update,
+    insert,
   })
 }
 

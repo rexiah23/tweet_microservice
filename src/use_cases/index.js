@@ -1,6 +1,7 @@
 import buildAddTweet       from "./add_tweet.js"
 import createModerateTweet from "./moderate_tweet.js";
 import tweetDb             from "../data_access/index.js"
+import buildEditTweet      from "./edit_tweet.js";
 //TODO: Create real functions for below
 
 
@@ -14,8 +15,8 @@ const initiateReview = () => {
 }
 
 const moderate = createModerateTweet({isSuspicious, initiateReview})
-const addTweet = buildAddTweet({ tweetDb, moderate }) 
 
-console.log('created add tweet: ', addTweet)
-export default addTweet 
-export { moderate, addTweet }
+const addTweet = buildAddTweet({ tweetDb, moderate }) 
+const editTweet = buildEditTweet({ tweetDb, moderate })
+
+export { moderate, addTweet, editTweet }
